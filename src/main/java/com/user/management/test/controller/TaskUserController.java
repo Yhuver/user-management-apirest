@@ -5,6 +5,7 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,6 +20,7 @@ import com.user.management.test.dto.ListTaskUserDto;
 import com.user.management.test.service.ITaskUserService;
 import com.user.management.test.util.EndponitUtil;
 
+@CrossOrigin("*")
 @RestController
 @RequestMapping(EndponitUtil.PATH_TASK_USER)
 public class TaskUserController {
