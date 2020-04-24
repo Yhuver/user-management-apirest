@@ -23,9 +23,10 @@ public class TaskCustomDao implements ITaskCustomDao{
 	public List<ListTaskDto> listTaskExceptByUser(User user) {
 		
 		Query query = entityManager
-				.createQuery("select ta.name, ta.id"
-						+ " from Task as ta left join ta.taskUser as tu"
-						+ " where tu.user != ?1 or tu.user = null")
+				.createQuery("select tas.name, tas.id from Task as tas where tas.id NOT IN"
+						+ " (select ta.id"
+						+ " from TaskUser as tu inner join tu.task as ta"
+						+ " where tu.user = ?1) ")
 				.setParameter(1, user);
 		List<Object[]> results = query.getResultList();
 

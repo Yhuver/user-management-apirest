@@ -23,9 +23,10 @@ public class ProfileCustomDao implements IProfileCustomDao{
 	public List<ListProfileDto> listProfileExceptByUser(User user) {
 		
 		Query query = entityManager
-				.createQuery("select pr.id, pr.name"
-						+ " from ProfileUser as pu right join pu.profile as pr"
-						+ " where pu.user != ?1 or pu.user = null")
+				.createQuery("select pro.id, pro.name from Profile as pro where pro.id NOT IN"
+						+ " (select pr.id"
+						+ " from ProfileUser as pu inner join pu.profile as pr"
+						+ " where pu.user = ?1)")
 				.setParameter(1, user);
 		List<Object[]> results = query.getResultList();
 
