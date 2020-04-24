@@ -12,6 +12,8 @@ public interface IProfileService {
 
 	public Profile getProfile(Long idProfile);
 	
+	public List<ListProfileDto> listProfileExceptByUser(Long idUser);
+	
 	
 	
 }

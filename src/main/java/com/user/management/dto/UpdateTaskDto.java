@@ -1,6 +1,5 @@
 package com.user.management.dto;
 
-import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 import lombok.AllArgsConstructor;
@@ -15,7 +14,6 @@ import lombok.NoArgsConstructor;
 public class UpdateTaskDto {
 	
 	@NotNull(message = "{notnull}")
-	@NotEmpty(message = "{notempty}")
 	private long idTask;
 
 	private String name;

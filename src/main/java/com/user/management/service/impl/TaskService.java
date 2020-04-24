@@ -14,14 +14,23 @@ import com.user.management.dto.ListTaskDto;
 import com.user.management.dto.UpdateTaskDto;
 import com.user.management.exception.CustomException;
 import com.user.management.model.dao.ITaskDao;
+import com.user.management.model.dao.impl.TaskCustomDao;
 import com.user.management.model.entity.Task;
+import com.user.management.model.entity.User;
 import com.user.management.service.ITaskService;
+import com.user.management.service.IUserService;
 
 @Service
 public class TaskService implements ITaskService{
 	
 	@Autowired
 	private ITaskDao taskDao;
+	
+	@Autowired
+	private IUserService userService;
+	
+	@Autowired
+	private TaskCustomDao taskCustomDao;
 
 	@Override
 	public Task getTask(Long idTask) {
@@ -63,6 +72,7 @@ public class TaskService implements ITaskService{
 		task.setDescription(createTaskDto.getDescription());
 		task.setDuration(createTaskDto.getDuration());
 		task.setStatus(createTaskDto.getStatus());
+		taskDao.save(task);
 		
 		return "success";
 	}
@@ -70,6 +80,7 @@ public class TaskService implements ITaskService{
 	@Override
 	public String updateTask(UpdateTaskDto updateTaskDto) {
 		Task task=getTask(updateTaskDto.getIdTask());
+		
 		
 		if(updateTaskDto.getName()!=null&&!updateTaskDto.getName().isEmpty()) {
 			task.setName(updateTaskDto.getName());
@@ -83,6 +94,8 @@ public class TaskService implements ITaskService{
 		if(updateTaskDto.getStatus()!=null) {
 			task.setStatus(updateTaskDto.getStatus());
 		}
+		taskDao.save(task);
+		
 		
 		return "success";
 	}
@@ -97,6 +110,12 @@ public class TaskService implements ITaskService{
 			throw new CustomException("Error al intentar eliminar la Tarea", e);
 		}
 		return "success";
+	}
+
+	@Override
+	public List<ListTaskDto> listTaskExceptByUser(Long idUser) {
+		User user=userService.getUser(idUser);
+		return taskCustomDao.listTaskExceptByUser(user);
 	}
 
 }

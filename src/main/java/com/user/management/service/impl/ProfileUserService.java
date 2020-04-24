@@ -39,6 +39,9 @@ public class ProfileUserService implements IProfileUserService{
 		ProfileUser profileUser=new ProfileUser();
 		profileUser.setUser(userService.getUser(createProfileUserDto.getIdUser()));
 		profileUser.setProfile(profileService.getProfile(createProfileUserDto.getIdProfile()));
+		if(profileUserDao.existsByUserAndProfile(profileUser.getUser(), profileUser.getProfile())) {
+			throw new CustomException("Esta perfil y este usuario ya se encuentran relacionados", HttpStatus.NOT_FOUND);
+		}
 		profileUserDao.save(profileUser);
 		
 		return success;

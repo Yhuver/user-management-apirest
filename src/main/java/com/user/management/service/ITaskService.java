@@ -19,5 +19,7 @@ public interface ITaskService {
 	public String deleteTask(Long idTask);
 	
 	public Task getTask(Long idTask);
+	
+	public List<ListTaskDto> listTaskExceptByUser(Long idUser);
 
 }

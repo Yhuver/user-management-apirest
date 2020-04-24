@@ -65,4 +65,12 @@ public class TaskController {
 				message(success).build();
 	}
 	
+	@GetMapping("/exceptByUser")
+	public ApiResponseDto<List<ListTaskDto>> listTaskExceptByUser(@RequestHeader(required = true) Long idUser){
+		
+		return ApiResponseDto.<List<ListTaskDto>>builder().
+				data(taskService.listTaskExceptByUser(idUser)).
+				message("sucess").build();
+	}
+	
 }

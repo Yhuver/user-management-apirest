@@ -13,6 +13,7 @@ import com.user.management.exception.CustomException;
 import com.user.management.model.dao.ITaskUserCustomDao;
 import com.user.management.model.dao.ITaskUserDao;
 import com.user.management.model.entity.TaskUser;
+import com.user.management.model.entity.User;
 import com.user.management.service.ITaskService;
 import com.user.management.service.ITaskUserService;
 import com.user.management.service.IUserService;
@@ -40,6 +41,10 @@ public class TaskUserService implements ITaskUserService{
 		TaskUser taskUser=new TaskUser();
 		taskUser.setTask(taskService.getTask(createTaskUserDto.getIdTask()));
 		taskUser.setUser(userService.getUser(createTaskUserDto.getIdUser()));
+		if(taskUserDao.existsByUserAndTask(taskUser.getUser(), taskUser.getTask())) {
+			throw new CustomException("Esta tarea y este usuario ya se encuentran relacionados", HttpStatus.NOT_FOUND);
+		}
+		
 		taskUserDao.save(taskUser);
 		
 		return success;
