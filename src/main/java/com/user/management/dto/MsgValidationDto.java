@@ -12,4 +12,6 @@ public class MsgValidationDto {
 	private String field;
 	private String msg;
 	
+	
+	
 }

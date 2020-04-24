@@ -2,6 +2,8 @@ package com.user.management.controller;
 
 import java.util.List;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,11 +20,14 @@ import com.user.management.util.EndponitUtil;
 @RequestMapping(EndponitUtil.PATH_DEPENDENCY)
 public class DependencyController {
 	
+	private static final Logger LOGGER = LogManager.getLogger(DependencyController.class);
+	
 	@Autowired
 	private IDependencyService dependencyService;
 	
 	@GetMapping()
 	public ApiResponseDto<List<ListDependencyDto>> listDependency(){
+		LOGGER.info("Request Dependency :\n" +"listDependency" );
 		
 		return ApiResponseDto.<List<ListDependencyDto>>builder().
 				data(dependencyService.listDependency()).

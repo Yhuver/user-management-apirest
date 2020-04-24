@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration>
+	<Properties>
+		<Property name="LOG_PATH">../log/</Property>
+		<Property name="LOG_NAME">userManagementAudit</Property>
+		<Property name="LOG_PATTERN">%d{yyyy-MM-dd HH:mm:ss.SSSS}|%-level|%c|%m%n</Property>
+	</Properties>
+	<Appenders >
+		<!-- Console Appender -->
+		<Console name="Console" target="SYSTEM_OUT">
+			<PatternLayout pattern="${LOG_PATTERN}" />
+		</Console>
+
+		<!-- Rolling File Appender -->
+		<RollingFile name="RollingFile">
+			<FileName>${LOG_PATH}/${LOG_NAME}.log</FileName>
+			<FilePattern>${LOG_PATH}/${LOG_NAME}-%d{yyyy-MM-dd}.log</FilePattern>
+			<PatternLayout>
+				<Pattern>${LOG_PATTERN}</Pattern>
+			</PatternLayout>
+			<Policies>
+				<TimeBasedTriggeringPolicy interval="1"
+					modulate="true" />
+			</Policies>
+			<DefaultRolloverStrategy max="5" />
+		</RollingFile>
+
+	</Appenders>
+	<Loggers>
+		<Root level="info">
+			<AppenderRef ref="Console"/>
+			<AppenderRef ref="RollingFile" />
+		</Root>
+	</Loggers>
+	
+</Configuration>
